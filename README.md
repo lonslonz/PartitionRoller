@@ -1,2 +1,4 @@
 # PartitionRoller
-Roll MySQL partition. Drop past partitions and add new partitions. 
+Roll MySQL partitions periodically. It drops previous partitions and adds new partitions. 
+
+###
