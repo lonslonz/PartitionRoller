@@ -8,43 +8,57 @@ from optparse import OptionParser
 
 def main(options, args):
 
-    curr = arrow.utcnow()
+    curr = arrow.now()
+    print "Current time : ", curr
 
     if(options.basis == "daily") :
         curr = curr.floor('day')
         remove = curr.replace(days=-options.removePart)
         add = curr.replace(days=+options.addPart)
-    else:
+        partitionNameFormat = 'YYYYMMDD'
+        timeFormat = 'YYYY-MM-DD 00:00:00'
+    elif(options.basis == "monthly"):
         curr = curr.floor('month')
         remove = curr.replace(months=-options.removePart)
         add = curr.replace(months=+options.addPart)
+        partitionNameFormat = 'YYYYMMD';
+        timeFormat = 'YYYY-MM-DD 00:00:00'
+    else:
+        curr = curr.floor('hour')
+        remove = curr.replace(hours=-options.removePart)
+        add = curr.replace(hours=+options.addPart)
+        partitionNameFormat = 'YYYYMMDDHH'
+        timeFormat = 'YYYY-MM-DD HH:00:00';
 
-    removeQuery = "alter table %s drop partition p%s" % (options.table, remove.format('YYYYMMDD'))
+    removeQuery = "alter table %s drop partition p%s" % (options.table, remove.format(partitionNameFormat))
     addQuery = "alter table %s add partition (partition p%s values less than (unix_timestamp('%s')))" % \
-               (options.table, add.format('YYYYMMDD'), add.format('YYYY-MM-DD 00:00:00'))
+           (options.table, add.format(partitionNameFormat), add.format(timeFormat))
 
     uri = "mysql://" + options.user + ":" + options.password + "@" + options.host + "/" + options.db
 
     try:
-        db = dataset.connect(uri)
+        if not options.verbose :
+            db = dataset.connect(uri)
     except Exception, e:
         print e.message
         return
     try:
         print "+ Remove a partition"
-        print "- Query: ", removeQuery
-        result = db.query(removeQuery)
-        print "- Success"
+        print "\t- Query: ", removeQuery
+        if not options.verbose :
+            result = db.query(removeQuery)
+        print "\t- Success"
     except Exception, e:
-        print "- Error: ", e.message
+        print "\t- Warn: ", e.message
 
     try:
         print "+ Add a partition"
-        print "- Query", addQuery
-        result = db.query(addQuery)
-        print "- Success"
+        print "\t- Query", addQuery
+        if not options.verbose :
+            result = db.query(addQuery)
+        print "\t- Success"
     except Exception, e:
-        print "- Error: ", e.message
+        print "\t- Warn: ", e.message
 
     print "Complete Work"
 
@@ -67,7 +81,8 @@ if __name__ == '__main__':
     parser.add_option("-r", "--remove", action = "store", type = "int", dest="removePart",
                   help = "a partition to be removed")
     parser.add_option("-b", "--basis", action = "store", type = "choice", dest="basis", default="daily",
-                      choices=['daily', 'monthly'], help = "time basis")
+                      choices=['daily', 'monthly', 'hourly'], help = "time basis")
+    parser.add_option("-v", "--verbose", action = "store_true", dest="verbose", default=False, help = "only print query")
 
     (options, args) = parser.parse_args()
     print options
