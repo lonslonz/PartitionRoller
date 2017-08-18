@@ -31,7 +31,7 @@ def main(options, args):
         timeFormat = 'YYYY-MM-DD HH:00:00';
 
     removeQuery = "alter table %s drop partition p%s" % (options.table, remove.format(partitionNameFormat))
-    addQuery = "alter table %s add partition (partition p%s values less than (unix_timestamp('%s')))" % \
+    addQuery = "alter table %s add partition (partition p%s values less than ('%s'))" % \
            (options.table, add.format(partitionNameFormat), add.format(timeFormat))
 
     uri = "mysql://" + options.user + ":" + options.password + "@" + options.host + "/" + options.db
