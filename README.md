@@ -45,6 +45,7 @@ execute rollPartition.py script with arguements.
 
 * -H : MySQL server
 * -d : database
+* -t : tablename
 * -u : user
 * -p : password
 * -r : the partition to be removed (day or month)
