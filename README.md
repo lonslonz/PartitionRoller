@@ -1,9 +1,10 @@
 # PartitionRoller
 Roll MySQL partitions periodically. It drops previous partitions and adds new partitions. 
+Support python3.
 
 ### Install 
 
-Download source and execute rollPartition.py or register it to your cron
+Download source and execute rollPartition.py or register it to your cron.
 
 ### Creating MySQL partitioned table
 
