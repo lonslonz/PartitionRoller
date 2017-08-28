@@ -9,7 +9,7 @@ from optparse import OptionParser
 def main(options, args):
 
     curr = arrow.now()
-    print "Current time : ", curr
+    print ("Current time : ", curr)
 
     if(options.basis == "daily") :
         curr = curr.floor('day')
@@ -39,28 +39,28 @@ def main(options, args):
     try:
         if not options.verbose :
             db = dataset.connect(uri)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print (e)
         return
     try:
-        print "+ Remove a partition"
-        print "\t- Query: ", removeQuery
+        print ("+ Remove a partition")
+        print ("\t- Query: ", removeQuery)
         if not options.verbose :
             result = db.query(removeQuery)
-        print "\t- Success"
-    except Exception, e:
-        print "\t- Warn: ", e.message
+        print("\t- Success")
+    except Exception as e:
+        print("\t- Warn: ", e)
 
     try:
-        print "+ Add a partition"
-        print "\t- Query", addQuery
+        print("+ Add a partition")
+        print("\t- Query", addQuery)
         if not options.verbose :
             result = db.query(addQuery)
-        print "\t- Success"
-    except Exception, e:
-        print "\t- Warn: ", e.message
+        print ("\t- Success")
+    except Exception as e:
+        print ("\t- Warn: ", e)
 
-    print "Complete Work"
+    print ("Complete Work")
 
 
 if __name__ == '__main__':
@@ -85,8 +85,8 @@ if __name__ == '__main__':
     parser.add_option("-v", "--verbose", action = "store_true", dest="verbose", default=False, help = "only print query")
 
     (options, args) = parser.parse_args()
-    print options
-    print "database : ", options.db
-    print args
+    print (options)
+    print ("database : ", options.db)
+    print (args)
     main(options, args)
 
