@@ -2,7 +2,7 @@
 Roll MySQL partitions periodically. It drops previous partitions and adds new partitions. 
 Support python3.
 
-### prerequisite
+### Prerequisite
 
 * arrow
 * dataset
