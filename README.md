@@ -59,7 +59,7 @@ Assume that today is 2015-03-04. I want to maintain historic data for 3 days. An
         
 I want to maintain historic data for 3 months. Following execution will remove the partition of 2015-01-01 and create the partitions of 2015-05-01
 
-        python rollPartition.py -H mysql.server.com -d database -u username -p password -r 2 -a 2 -b daily -t t2
+        python rollPartition.py -H mysql.server.com -d database -u username -p password -r 2 -a 2 -b monthly -t t2
 
 ### Register to crontab
 
