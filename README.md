@@ -15,12 +15,12 @@ To maintain tables for historic data (You want to remove the partition which is 
           `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`a`,`update_time`)
         ) ENGINE=InnoDB
-        /*!50100 PARTITION BY RANGE (UNIX_TIMESTAMP(update_time))
-        (PARTITION p20150529 VALUES LESS THAN (unix_timestamp('2015-05-29 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150530 VALUES LESS THAN (unix_timestamp('2015-05-30 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150531 VALUES LESS THAN (unix_timestamp('2015-05-31 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150601 VALUES LESS THAN (unix_timestamp('2015-06-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150602 VALUES LESS THAN (unix_timestamp('2015-06-02 00:00:00')) ENGINE = InnoDB) */;
+        /*!50100 PARTITION BY RANGE COLUMNS(update_time)
+        (PARTITION p20150529 VALUES LESS THAN ('2015-05-29 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150530 VALUES LESS THAN ('2015-05-30 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150531 VALUES LESS THAN ('2015-05-31 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150601 VALUES LESS THAN ('2015-06-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150602 VALUES LESS THAN ('2015-06-02 00:00:00') ENGINE = InnoDB) */;
  
         CREATE TABLE `monthly_partitioned_table` (
           `a` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -28,14 +28,14 @@ To maintain tables for historic data (You want to remove the partition which is 
           `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
           PRIMARY KEY (`a`,`update_time`)
         ) ENGINE=InnoDB
-        /*!50100 PARTITION BY RANGE (UNIX_TIMESTAMP(update_time))
-        (PARTITION p20150101 VALUES LESS THAN (unix_timestamp('2015-01-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150201 VALUES LESS THAN (unix_timestamp('2015-02-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150301 VALUES LESS THAN (unix_timestamp('2015-03-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150401 VALUES LESS THAN (unix_timestamp('2015-04-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150501 VALUES LESS THAN (unix_timestamp('2015-05-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150601 VALUES LESS THAN (unix_timestamp('2015-06-01 00:00:00')) ENGINE = InnoDB,
-         PARTITION p20150701 VALUES LESS THAN (unix_timestamp('2015-07-01 00:00:00')) ENGINE = InnoDB) */;
+        /*!50100 PARTITION BY RANGE COLUMNS(update_time)
+        (PARTITION p20150101 VALUES LESS THAN ('2015-01-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150201 VALUES LESS THAN ('2015-02-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150301 VALUES LESS THAN ('2015-03-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150401 VALUES LESS THAN ('2015-04-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150501 VALUES LESS THAN ('2015-05-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150601 VALUES LESS THAN ('2015-06-01 00:00:00') ENGINE = InnoDB,
+         PARTITION p20150701 VALUES LESS THAN ('2015-07-01 00:00:00') ENGINE = InnoDB) */;
          
 ### Executing roller
 
