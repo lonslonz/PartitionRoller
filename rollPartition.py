@@ -21,7 +21,7 @@ def main(options, args):
         curr = curr.floor('month')
         remove = curr.replace(months=-options.removePart)
         add = curr.replace(months=+options.addPart)
-        partitionNameFormat = 'YYYYMMD';
+        partitionNameFormat = 'YYYYMMDD';
         timeFormat = 'YYYY-MM-DD 00:00:00'
     else:
         curr = curr.floor('hour')
@@ -31,7 +31,7 @@ def main(options, args):
         timeFormat = 'YYYY-MM-DD HH:00:00';
 
     removeQuery = "alter table %s drop partition p%s" % (options.table, remove.format(partitionNameFormat))
-    addQuery = "alter table %s add partition (partition p%s values less than ('%s'))" % \
+    addQuery = "alter table %s add partition (partition p%s values less than (unix_timestamp('%s')))" % \
            (options.table, add.format(partitionNameFormat), add.format(timeFormat))
 
     uri = "mysql://" + options.user + ":" + options.password + "@" + options.host + "/" + options.db
